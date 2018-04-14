@@ -1,0 +1,11 @@
+D:\Users\Tiarek\Desktop\Grafy\Grafy\bin\Debug\netcoreapp2.0\Grafy.deps.json
+D:\Users\Tiarek\Desktop\Grafy\Grafy\bin\Debug\netcoreapp2.0\Grafy.runtimeconfig.json
+D:\Users\Tiarek\Desktop\Grafy\Grafy\bin\Debug\netcoreapp2.0\Grafy.runtimeconfig.dev.json
+D:\Users\Tiarek\Desktop\Grafy\Grafy\bin\Debug\netcoreapp2.0\Grafy.dll
+D:\Users\Tiarek\Desktop\Grafy\Grafy\bin\Debug\netcoreapp2.0\Grafy.pdb
+D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.csprojResolveAssemblyReference.cache
+D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.csproj.CoreCompileInputs.cache
+D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.AssemblyInfoInputs.cache
+D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.AssemblyInfo.cs
+D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.dll
+D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.pdb
