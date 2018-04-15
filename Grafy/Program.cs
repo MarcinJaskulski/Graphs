@@ -152,6 +152,8 @@ namespace Grafy
             }
         }
 
+        // --- MG ---
+
         static void CommingListCompleteGrafMatrix(ref List<int>[] commingList, ref int[,] grafMatrix, int n) // uzupełnianie MG przy pomocy listy następników
         {
             int lastNode = -1; // będzie zawierał wartość ostatniego węzła
@@ -229,9 +231,7 @@ namespace Grafy
             }
         }
 
-
-
-        static void TransformToGrafMatrix(ref int[,] adjacencyMatrix, ref int[,] grafMatrix, int n)
+        static void TransformToGrafMatrix(ref int[,] adjacencyMatrix, ref int[,] grafMatrix, int n) // transformacja na MG
         {
             // Proces tworzenia tablicy z Listami
             List<int>[] commingList = new List<int>[n]; // następnik
@@ -257,14 +257,63 @@ namespace Grafy
 
             // ---- Wyswietlanie ----
 
-            for (int i=0; i<n; i++)
+            //for (int i=0; i<n; i++)
+            //{
+            //    for(int j=0; j<n+3; j++)
+            //    {
+            //        Console.Write(grafMatrix[i, j] + "\t");
+            //    }
+            //    Console.Write("\n");
+            //}
+        }
+
+        // ------
+
+        static void AdjecencyBFSSort(ref int[,] adjecencyMatrix, int n) // sortowanie BFS z macierzy sąsiedztwa
+        {
+            int[] amountPredecessor = new int[n];
+            int[] sorted = new int[n];
+            int sortIndex = 0;
+
+
+            for(int i=0; i<n; i++) // uzupełnienie tabeli z liczbą poprzedników
             {
-                for(int j=0; j<n+3; j++)
+                for (int j=0; j<n; j++)
                 {
-                    Console.Write(grafMatrix[i, j] + "\t");
+                    if (adjecencyMatrix[j, i] == 1) amountPredecessor[i]++; // iterujemy w kolumnie wiersze, gdy ma poprzednik to zwiększamy liczbę
                 }
-                Console.Write("\n");
             }
+
+            for(int i=0; sortIndex < n; i++)
+            {
+                if (amountPredecessor[i] == 0)
+                {
+                    sorted[sortIndex] = i; // zapisanie w posortowanej
+                    sortIndex++; // przesunięcie indeksu posortowanej tablicy
+                    amountPredecessor[i] = -1; // "Usunięcie" z tabeli
+
+                    for (int j=0; j<n; j++)
+                    {
+                        if (adjecencyMatrix[i, j] == 1) amountPredecessor[j]--;
+                    }
+                    i = 0; // po udanym wejsciu zaczynamy od 0
+                }
+                
+                if(i+1 >= n) // jeśli będzie błąd
+                {
+                    Console.WriteLine("To nie jest graf acykliczny!");
+                    break;
+                }
+            }
+
+            // --- Wyswietlenie ---
+
+            for(int i=0; i<n; i++)
+            {
+                Console.Write(sorted[i] + " " );
+            }
+
+
         }
 
         static void Main()
@@ -285,7 +334,7 @@ namespace Grafy
             TransformToCommingList(ref adjacencyMatrix, ref commingList, n);
             TransformToGrafMatrix(ref adjacencyMatrix, ref grafMatrix, n);
 
-
+            AdjecencyBFSSort(ref adjacencyMatrix, n);
 
         }
     }
