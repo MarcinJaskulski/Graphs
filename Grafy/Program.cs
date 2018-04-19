@@ -28,7 +28,7 @@ namespace Grafy
                 }
             }
 
-            for (int i = 0; i < saturate-n; i++) // dzięki "-n" wcześniejsza pętla nie zajmuje dodatkowej złożoności czasowej + zgadza się nasycenie
+            for (int i = 0; i < saturate-n+1; i++) // dzięki "-n" wcześniejsza pętla nie zajmuje dodatkowej złożoności czasowej + zgadza się nasycenie; +1 bo we wczesniejszej pętli odjeliśmy
             {
                 y = rand.Next(0, n-1); // losowanie wiersza; -1, bo przekątna
                 x = rand.Next(y + 1, n); // losowanie kolumny; +1, bo przekątna
@@ -100,7 +100,7 @@ namespace Grafy
                     }
                 }
                 commingList[i].Add(-1); // znak końca
-               // Console.Write("-1 \n");
+                //Console.Write("-1 \n");
             }
         }
 
@@ -257,9 +257,9 @@ namespace Grafy
 
             // ---- Wyswietlanie ----
 
-            //for (int i=0; i<n; i++)
+            //for (int i = 0; i < n; i++)
             //{
-            //    for(int j=0; j<n+3; j++)
+            //    for (int j = 0; j < n + 3; j++)
             //    {
             //        Console.Write(grafMatrix[i, j] + "\t");
             //    }
@@ -271,27 +271,30 @@ namespace Grafy
 
         static void AdjecencyBFSSort(ref int[,] adjecencyMatrix, int n) // sortowanie BFS z macierzy sąsiedztwa
         {
-            int[] amountPredecessor = new int[n];
+            int[] amountPredecessor = new int[n]; // tabela ze zliczonymi następnikami dla danego n, czyli węzła
             int[] sorted = new int[n];
             int sortIndex = 0;
 
-
-            for(int i=0; i<n; i++) // uzupełnienie tabeli z liczbą poprzedników
+            // uzupełnienie tabeli z liczbą poprzedników // Inne dla każdej reprezentacji
+            for (int i=0; i<n; i++) 
             {
-                for (int j=0; j<n; j++)
+                for (int j=0; j<n; j++) 
                 {
-                    if (adjecencyMatrix[j, i] == 1) amountPredecessor[i]++; // iterujemy w kolumnie wiersze, gdy ma poprzednik to zwiększamy liczbę
+                    if (adjecencyMatrix[j, i] == 1) amountPredecessor[i]++; // iterujemy w kolumnie wiersze, gdy ma poprzednika to zwiększamy liczbę
                 }
             }
 
+            //szukanie kolejnych miesjc "0" - bez krawędzi
             for(int i=0; sortIndex < n; i++)
             {
+                // wyszukiwanie wierzchołków, bez krawędzi wejściowych
                 if (amountPredecessor[i] == 0)
                 {
                     sorted[sortIndex] = i; // zapisanie w posortowanej
                     sortIndex++; // przesunięcie indeksu posortowanej tablicy
                     amountPredecessor[i] = -1; // "Usunięcie" z tabeli
 
+                    // obniżenie w tabeli o 1 -> Przeszukanie połączeń // Inne dla każdej reprezentacji
                     for (int j=0; j<n; j++)
                     {
                         if (adjecencyMatrix[i, j] == 1) amountPredecessor[j]--;
@@ -306,20 +309,171 @@ namespace Grafy
                 }
             }
 
-            // --- Wyswietlenie ---
+            //// --- Wyswietlenie ---
 
-            for(int i=0; i<n; i++)
+            for (int i = 0; i < n; i++)
             {
-                Console.Write(sorted[i] + " " );
+                Console.Write(sorted[i] + " ");
             }
+            Console.Write("\n");
 
 
         }
 
+        static void ComminfBFSSort(ref List<int>[] commingList, int n)
+        {
+            int[] amountPredecessor = new int[n]; // tabela ze zliczonymi następnikami dla danego n, czyli węzła
+            int[] sorted = new int[n];
+            int sortIndex = 0;
+
+            // uzupełnienie tabeli z liczbą poprzedników
+            for (int i = 0; i < n; i++)
+            {
+                foreach (int item in commingList[i])
+                {
+                    if (item != -1) amountPredecessor[item]++;
+                }
+            }
+
+            //szukanie kolejnych miesjc "0" - bez krawędzi
+            for (int i = 0; sortIndex < n; i++)
+            {
+                // wyszukiwanie wierzchołków, bez krawędzi wejściowych
+                if (amountPredecessor[i] == 0)
+                {
+                    sorted[sortIndex] = i; // zapisanie w posortowanej
+                    sortIndex++; // przesunięcie indeksu posortowanej tablicy
+                    amountPredecessor[i] = -1; // "Usunięcie" z tabeli
+
+                    // obniżenie w tabeli o 1 -> Przeszukanie połączeń // Inne dla każdej reprezentacji
+                    foreach (int item in commingList[i])
+                    {
+                        if (item != -1) amountPredecessor[item]--;
+                    }
+
+
+                    i = 0; // po udanym wejsciu zaczynamy od 0
+                }
+
+
+                if (i + 1 >= n) // jeśli będzie błąd
+                {
+                    Console.WriteLine("To nie jest graf acykliczny!");
+                    break;
+                }
+            }
+
+            //// --- Wyswietlenie ---
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write(sorted[i] + " ");
+            }
+            Console.Write("\n");
+        }
+
+
+        static void EdgeBFSSort(ref int[,] edgeTable, int n, int m) // n- ilość wierzchołków, m - ilość połączeń -> saturate
+        {
+            int[] amountPredecessor = new int[n]; // tabela ze zliczonymi następnikami dla danego n, czyli węzła
+            int[] sorted = new int[n];
+            int sortIndex = 0;
+
+            // uzupełnienie tabeli z liczbą poprzedników
+            for (int i = 0; i < m; i++)
+            {
+                amountPredecessor[edgeTable[i, 1]]++;
+            }
+
+            //szukanie kolejnych miesjc "0" - bez krawędzi
+            for (int i = 0; sortIndex < n; i++)
+            {
+                // wyszukiwanie wierzchołków, bez krawędzi wejściowych
+                if (amountPredecessor[i] == 0)
+                {
+                    sorted[sortIndex] = i; // zapisanie w posortowanej
+                    sortIndex++; // przesunięcie indeksu posortowanej tablicy
+                    amountPredecessor[i] = -1; // "Usunięcie" z tabeli
+
+                    // obniżenie w tabeli o 1 -> Przeszukanie połączeń // Inne dla każdej reprezentacji
+                    for(int j=0; j<m; j++)
+                    {
+                        if (edgeTable[j, 0] == i) amountPredecessor[edgeTable[j, 1]]--;
+                    }
+
+                    i = 0; // po udanym wejsciu zaczynamy od 0
+                }
+            }
+
+            // --- Wyswietlenie ---
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write(sorted[i] + " ");
+            }
+            Console.Write("\n");
+        }
+
+
+        static void GrafMatrixBFSSort(ref int[,] grafMatrix, int n)
+        {
+            int[] amountPredecessor = new int[n]; // tabela ze zliczonymi następnikami dla danego n, czyli węzła
+            int[] sorted = new int[n];
+            int sortIndex = 0;
+            int helper = 0;
+
+            // uzupełnienie tabeli z liczbą poprzedników na podstawie wartości w macierzy incydencj nakłądanych z listy poprzedników (w skrócie uwaga na ujmne)
+            for (int i = 0; i < n; i++) // iteracja po wierszach
+            {
+                helper = grafMatrix[i, n+1]; // helper pokazuje co będzie następne pokazane 
+
+                while(helper != -1) // sprawdzenie, czy istnieje jakikolwiek poprzednik
+                {
+                    amountPredecessor[i]++; // zliczenie
+                    if (helper == grafMatrix[i, helper] * (-1) ) break; // jeśli trafimy na koniec, to wychodzimy
+                    helper = grafMatrix[i, helper] * (-1); // ustawienie nowej wartości helpera na kolejny element ; "-1", bo musimy mieć dodatnią
+                }
+            }
+
+            //szukanie kolejnych miesjc "0" - bez krawędzi
+            for (int i = 0; sortIndex < n; i++)
+            {
+                // wyszukiwanie wierzchołków, bez krawędzi wejściowych
+                if (amountPredecessor[i] == 0)
+                {
+                    sorted[sortIndex] = i; // zapisanie w posortowanej
+                    sortIndex++; // przesunięcie indeksu posortowanej tablicy
+                    amountPredecessor[i] = -1; // "Usunięcie" z tabeli
+
+                    // obniżenie w tabeli o 1 -> Przeszukanie połączeń // Inne dla każdej reprezentacji
+                    helper = grafMatrix[i, n]; // helper pokazuje co będzie następne pokazane 
+
+                    while (helper != -1)
+                    {
+                        amountPredecessor[helper]--; // zliczenie
+                        if (helper == grafMatrix[i, helper]) break; // jeśli trafimy na koniec, to wychodzimy
+                        helper = grafMatrix[i, helper]; // ustawienie nowej wartości helpera na kolejny element
+                    }
+
+                    i = 0; // po udanym wejsciu zaczynamy od 0
+                }
+            }
+
+            // --- Wyswietlenie ---
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write(sorted[i] + " ");
+            }
+
+        }
+
+
+
         static void Main()
         {
-            int n = 8; // długość boku -> liczba wierzchołków
-            int saturate = (n * (n + 1) / 2) / 2; // nasycenie
+            int n = 20; // długość boku -> liczba wierzchołków
+            int saturate = (n * (n + 1) / 2) / 2; // nasycenie -> ilość połączeń
             int[,] adjacencyMatrix = new int[n,n]; // macierz sąsiedztwa
             int[,] edgeTable = new int[saturate,2]; // tabela krawędzi
 
@@ -335,6 +489,9 @@ namespace Grafy
             TransformToGrafMatrix(ref adjacencyMatrix, ref grafMatrix, n);
 
             AdjecencyBFSSort(ref adjacencyMatrix, n);
+            ComminfBFSSort(ref commingList, n);
+            EdgeBFSSort(ref edgeTable, n, saturate);
+            GrafMatrixBFSSort(ref grafMatrix, n);
 
         }
     }
