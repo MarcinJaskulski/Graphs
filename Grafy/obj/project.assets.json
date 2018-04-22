@@ -664,7 +664,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tiarek\\.nuget\\packages\\": {},
+    "C:\\Users\\Kamil\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -673,18 +674,20 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\Users\\Tiarek\\Desktop\\Grafy\\Grafy\\Grafy.csproj",
+      "projectUniqueName": "C:\\Users\\Kamil\\source\\repos\\Graphs\\Grafy\\Grafy.csproj",
       "projectName": "Grafy",
-      "projectPath": "D:\\Users\\Tiarek\\Desktop\\Grafy\\Grafy\\Grafy.csproj",
-      "packagesPath": "C:\\Users\\Tiarek\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\Tiarek\\Desktop\\Grafy\\Grafy\\obj\\",
+      "projectPath": "C:\\Users\\Kamil\\source\\repos\\Graphs\\Grafy\\Grafy.csproj",
+      "packagesPath": "C:\\Users\\Kamil\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kamil\\source\\repos\\Graphs\\Grafy\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Tiarek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Kamil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -709,7 +712,7 @@
         "dependencies": {
           "Microsoft.NETCore.App": {
             "target": "Package",
-            "version": "2.0.0",
+            "version": "[2.0.0, )",
             "autoReferenced": true
           }
         },

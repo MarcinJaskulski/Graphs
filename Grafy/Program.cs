@@ -257,14 +257,14 @@ namespace Grafy
 
             // ---- Wyswietlanie ----
 
-            //for (int i = 0; i < n; i++)
-            //{
-            //    for (int j = 0; j < n + 3; j++)
-            //    {
-            //        Console.Write(grafMatrix[i, j] + "\t");
-            //    }
-            //    Console.Write("\n");
-            //}
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n + 3; j++)
+                {
+                    Console.Write(grafMatrix[i, j] + ",");
+                }
+                Console.Write("\n");
+            }
         }
 
         // ------
@@ -467,8 +467,158 @@ namespace Grafy
             }
 
         }
+        
 
 
+
+        static void DFS(int n, ref int[,] adjacencyMatrix, ref List<int>[] commingList, ref int[,] EdgeTable, ref int[,] grafMatrix)
+        {
+            //Taki Main dla dfsów, stąd idzie cała lista visited, sorted i wypisywanie testowe; zrobilem tak ze wzgledu na rekurencyjny charakter DFSów
+
+            //inicjujemy tablice elementow posortowanych i odwiedzonych
+            int[] sorted = new int[n];
+            int[] visited = new int[n];
+            int VCounter = 0, Scounter=n-1; //licznik pierwszego wolnego elementu tablicy visited i sorted
+
+            //algorytm dla macierzy sąsiedztwa
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+             if(!visited.Contains(i))  AdjecencyDFSSort(ref adjacencyMatrix, ref sorted, ref visited, i,ref Scounter, ref VCounter,n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+
+            //wyświetlanie
+            Console.Write("\n");
+            for (int i = 0; i < n; i++)
+            {
+
+                Console.Write(sorted[i] + " ");
+            }
+         
+            // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
+            sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
+
+            VCounter = 0; Scounter = n - 1;
+            //algorytm dla Listy następników
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+                if (!visited.Contains(i)) ComminfDFSSort(ref commingList, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+
+            //wyświetlanie
+            Console.Write("\n");
+            for (int i = 0; i < n; i++)
+            {
+
+                Console.Write(sorted[i] + " ");
+            }
+            // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
+            sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
+
+            VCounter = 0; Scounter = n - 1;
+            //algorytm dla tabeli krawędzi
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+                if (!visited.Contains(i)) EdgeDFSSort(ref EdgeTable, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+
+            //wyświetlanie
+            Console.Write("\n");
+            for (int i = 0; i < n; i++)
+            {
+
+                Console.Write(sorted[i] + " ");
+            }
+            // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
+            sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
+
+            VCounter = 0; Scounter = n - 1;
+            //algorytm dla macierzy grafu
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+                if (!visited.Contains(i)) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+
+            //wyświetlanie
+            Console.Write("\n");
+            for (int i = 0; i < n; i++)
+            {
+
+                Console.Write(sorted[i] + " ");
+            }
+        }
+        static void GrafMatrixDFSSort(ref int[,] grafMatrix, ref int[] sorted, ref int[] visited, int i, ref int Scounter, ref int VCounter, int n)
+        {
+
+            visited[VCounter] = i; //wstawiamy do odwiedzonych zwiekszamy counter o 1
+            VCounter++;
+            //sprawdzamy wiersz naszego elementu i, pole n+1 i pola od 0 do n-1 (zastosowana inna kolejnosc elementów
+            if(!visited.Contains(grafMatrix[i,n+1])) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, grafMatrix[i, n+1], ref Scounter, ref VCounter, n);
+            for (int j = 0; j < n; j++)//dla wszystkich elementow sprawdzamy czy sa nastepnikami i czy nie ma ich juz w visited- jesli spelnia te warunki, wywolujemy rekurencyjnie
+                if (!visited.Contains(grafMatrix[i, j]) && grafMatrix[i, j]<n&& grafMatrix[i, j]>=0 && grafMatrix[i, j]!=j) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, grafMatrix[i, j], ref Scounter, ref VCounter, n);
+
+
+            sorted[Scounter] = i; //skoro przeszliśmy już wszystkie następniki to możemy wpisać wierzchołek do tablicy
+            Scounter--;
+
+
+
+        }
+        static void EdgeDFSSort(ref int[,] EdgeTable, ref int[] sorted, ref int[] visited, int i, ref int Scounter, ref int VCounter, int n)
+        {
+
+            visited[VCounter] = i; //wstawiamy do odwiedzonych zwiekszamy counter o 1
+            VCounter++;
+            //dla wszystkich elementow sprawdzamy czy sa nastepnikami i czy nie ma ich juz w visited- jesli spelnia te warunki, wywolujemy rekurencyjnie
+            for (int x = 0; x < n; x++) //musimy przeleciec po calej tablicy dwoma petlami
+            {
+            if(EdgeTable[x,0]==i && !visited.Contains(EdgeTable[x,1]))
+                {
+                    int j = EdgeTable[x, 1];
+                    EdgeDFSSort(ref EdgeTable, ref sorted, ref visited, j, ref Scounter, ref VCounter, n);
+                }
+
+
+            }
+               
+
+
+            sorted[Scounter] = i; //skoro przeszliśmy już wszystkie następniki to możemy wpisać wierzchołek do tablicy
+            Scounter--;
+
+
+
+        }
+        static void ComminfDFSSort(ref List<int>[] commingList,ref int[] sorted, ref int[] visited, int i,ref int Scounter, ref int VCounter, int n)
+        {
+            visited[VCounter] = i; //wstawiamy do odwiedzonych zwiekszamy counter o 1
+            VCounter++;
+            foreach (int j in commingList[i])//dla wszystkich elementow sprawdzamy czy sa nastepnikami i czy nie ma ich juz w visited- jesli spelnia te warunki, wywolujemy rekurencyjnie
+            {
+              
+                if (!visited.Contains(j)&&j!=-1) ComminfDFSSort(ref commingList, ref sorted, ref visited, j, ref Scounter, ref VCounter, n);
+            }
+            
+
+
+            sorted[Scounter] = i; //skoro przeszliśmy już wszystkie następniki to możemy wpisać wierzchołek do tablicy
+            Scounter--;
+
+        }
+        static void AdjecencyDFSSort(ref int[,]  adjacencyMatrix, ref int[] sorted, ref int[] visited, int i, ref int Scounter, ref int VCounter, int n)
+        {
+        
+              visited[VCounter] = i; //wstawiamy do odwiedzonych zwiekszamy counter o 1
+                VCounter++;
+                for (int j = 0; j < n; j++)//dla wszystkich elementow sprawdzamy czy sa nastepnikami i czy nie ma ich juz w visited- jesli spelnia te warunki, wywolujemy rekurencyjnie
+                    if (!visited.Contains(j) && adjacencyMatrix[i,j] == 1) AdjecencyDFSSort(ref adjacencyMatrix, ref sorted, ref visited, j, ref Scounter, ref VCounter, n);
+
+
+                sorted[Scounter] = i; //skoro przeszliśmy już wszystkie następniki to możemy wpisać wierzchołek do tablicy
+                Scounter--;
+         
+        
+      
+        }
 
         static void Main()
         {
@@ -492,6 +642,13 @@ namespace Grafy
             ComminfBFSSort(ref commingList, n);
             EdgeBFSSort(ref edgeTable, n, saturate);
             GrafMatrixBFSSort(ref grafMatrix, n);
+      
+            DFS(n, ref adjacencyMatrix, ref commingList,ref edgeTable, ref grafMatrix);
+
+
+
+
+            Console.Read();
 
         }
     }
