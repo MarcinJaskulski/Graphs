@@ -482,6 +482,7 @@ namespace Grafy
             int VCounter = 0, Scounter=n-1; //licznik pierwszego wolnego elementu tablicy visited i sorted
             Stopwatch sw = new Stopwatch();
             //algorytm dla macierzy sąsiedztwa
+            sw.Start();
             for (int i = 0; i < n; i++) //dla każdego wiezrchołka
             {
              if(!visited.Contains(i))  AdjecencyDFSSort(ref adjacencyMatrix, ref sorted, ref visited, i,ref Scounter, ref VCounter,n); //jeśli w visited nie ma wierzchołka, wywołujemy
