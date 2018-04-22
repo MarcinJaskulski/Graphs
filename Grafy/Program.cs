@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Grafy
@@ -43,17 +44,17 @@ namespace Grafy
             }
 
 
-            // -- wyswietlanie --
+            //// -- wyswietlanie --
 
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    Console.Write(adjacencyMatrix[i, j] + " ");
-                }
-                Console.Write("\n");
-            }
-            Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
+            //    for (int j = 0; j < n; j++)
+            //    {
+            //        Console.Write(adjacencyMatrix[i, j] + " ");
+            //    }
+            //    Console.Write("\n");
+            //}
+            //Console.Write("\n");
         }
 
         static void TransformToEdgeTable(ref int[,] adjacencyMatrix, ref int[,] edgeTable, int n) // zamienia macierz sąsiedztwa na tabele krawędzi
@@ -257,14 +258,14 @@ namespace Grafy
 
             // ---- Wyswietlanie ----
 
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n + 3; j++)
-                {
-                    Console.Write(grafMatrix[i, j] + ",");
-                }
-                Console.Write("\n");
-            }
+            //for (int i = 0; i < n; i++)
+            //{
+            //    for (int j = 0; j < n + 3; j++)
+            //    {
+            //        Console.Write(grafMatrix[i, j] + ",");
+            //    }
+            //    Console.Write("\n");
+            //}
         }
 
         // ------
@@ -311,11 +312,11 @@ namespace Grafy
 
             //// --- Wyswietlenie ---
 
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write(sorted[i] + " ");
-            }
-            Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
+            //    Console.Write(sorted[i] + " ");
+            //}
+            //Console.Write("\n");
 
 
         }
@@ -365,11 +366,11 @@ namespace Grafy
 
             //// --- Wyswietlenie ---
 
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write(sorted[i] + " ");
-            }
-            Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
+            //    Console.Write(sorted[i] + " ");
+            //}
+            //Console.Write("\n");
         }
 
 
@@ -407,11 +408,11 @@ namespace Grafy
 
             // --- Wyswietlenie ---
 
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write(sorted[i] + " ");
-            }
-            Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
+            //    Console.Write(sorted[i] + " ");
+            //}
+            //Console.Write("\n");
         }
 
 
@@ -461,10 +462,10 @@ namespace Grafy
 
             // --- Wyswietlenie ---
 
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write(sorted[i] + " ");
-            }
+            //for (int i = 0; i < n; i++)
+            //{
+            //    Console.Write(sorted[i] + " ");
+            //}
 
         }
         
@@ -479,87 +480,95 @@ namespace Grafy
             int[] sorted = new int[n];
             int[] visited = new int[n];
             int VCounter = 0, Scounter=n-1; //licznik pierwszego wolnego elementu tablicy visited i sorted
-
+            Stopwatch sw = new Stopwatch();
             //algorytm dla macierzy sąsiedztwa
             for (int i = 0; i < n; i++) //dla każdego wiezrchołka
             {
              if(!visited.Contains(i))  AdjecencyDFSSort(ref adjacencyMatrix, ref sorted, ref visited, i,ref Scounter, ref VCounter,n); //jeśli w visited nie ma wierzchołka, wywołujemy
             }
+            sw.Stop();
+            Console.WriteLine("DFS\tMacierz Sasiedztwa\t" + sw.ElapsedMilliseconds + "\n");
+       
+            ////wyświetlanie
+            //Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
 
-            //wyświetlanie
-            Console.Write("\n");
-            for (int i = 0; i < n; i++)
-            {
+            //    Console.Write(sorted[i] + " ");
+            //}
 
-                Console.Write(sorted[i] + " ");
-            }
-         
             // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
             sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
 
             VCounter = 0; Scounter = n - 1;
             //algorytm dla Listy następników
+            sw.Restart();
             for (int i = 0; i < n; i++) //dla każdego wiezrchołka
             {
                 if (!visited.Contains(i)) ComminfDFSSort(ref commingList, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
             }
+            sw.Stop();
+            Console.WriteLine("DFS\tLista Nastepnikow\t" + sw.ElapsedMilliseconds + "\n");
+
 
             //wyświetlanie
-            Console.Write("\n");
-            for (int i = 0; i < n; i++)
-            {
+            //Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
 
-                Console.Write(sorted[i] + " ");
-            }
+            //    Console.Write(sorted[i] + " ");
+            //}
             // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
             sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
 
             VCounter = 0; Scounter = n - 1;
             //algorytm dla tabeli krawędzi
+            sw.Restart();
             for (int i = 0; i < n; i++) //dla każdego wiezrchołka
             {
                 if (!visited.Contains(i)) EdgeDFSSort(ref EdgeTable, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
             }
-
+            sw.Stop();
+            Console.WriteLine("DFS\tTabela Krawedzi\t" + sw.ElapsedMilliseconds + "\n");
             //wyświetlanie
-            Console.Write("\n");
-            for (int i = 0; i < n; i++)
-            {
+            //Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
 
-                Console.Write(sorted[i] + " ");
-            }
+            //    Console.Write(sorted[i] + " ");
+            //}
             // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
             sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
 
             VCounter = 0; Scounter = n - 1;
             //algorytm dla macierzy grafu
+            sw.Restart();
             for (int i = 0; i < n; i++) //dla każdego wiezrchołka
             {
                 if (!visited.Contains(i)) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
             }
-
+            sw.Stop();
+            Console.WriteLine("DFS\tMacierz Grafu\t" + sw.ElapsedMilliseconds + "\n");
             //wyświetlanie
-            Console.Write("\n");
-            for (int i = 0; i < n; i++)
-            {
+            //Console.Write("\n");
+            //for (int i = 0; i < n; i++)
+            //{
 
-                Console.Write(sorted[i] + " ");
-            }
+            //    Console.Write(sorted[i] + " ");
+            //}
         }
         static void GrafMatrixDFSSort(ref int[,] grafMatrix, ref int[] sorted, ref int[] visited, int i, ref int Scounter, ref int VCounter, int n)
         {
-
             visited[VCounter] = i; //wstawiamy do odwiedzonych zwiekszamy counter o 1
             VCounter++;
             //sprawdzamy wiersz naszego elementu i, pole n+1 i pola od 0 do n-1 (zastosowana inna kolejnosc elementów
-            if(!visited.Contains(grafMatrix[i,n+1])) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, grafMatrix[i, n+1], ref Scounter, ref VCounter, n);
+            if (!visited.Contains(grafMatrix[i, n + 1])&&grafMatrix[i,n+1]>=0) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, grafMatrix[i, n +1 ], ref Scounter, ref VCounter, n);
             for (int j = 0; j < n; j++)//dla wszystkich elementow sprawdzamy czy sa nastepnikami i czy nie ma ich juz w visited- jesli spelnia te warunki, wywolujemy rekurencyjnie
-                if (!visited.Contains(grafMatrix[i, j]) && grafMatrix[i, j]<n&& grafMatrix[i, j]>=0 && grafMatrix[i, j]!=j) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, grafMatrix[i, j], ref Scounter, ref VCounter, n);
+                if (!visited.Contains(grafMatrix[i, j]) && grafMatrix[i, j] < n && grafMatrix[i, j] >= 0 ) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, grafMatrix[i, j], ref Scounter, ref VCounter, n);
 
 
             sorted[Scounter] = i; //skoro przeszliśmy już wszystkie następniki to możemy wpisać wierzchołek do tablicy
             Scounter--;
-
 
 
         }
@@ -622,32 +631,47 @@ namespace Grafy
 
         static void Main()
         {
-            int n = 20; // długość boku -> liczba wierzchołków
-            int saturate = (n * (n + 1) / 2) / 2; // nasycenie -> ilość połączeń
-            int[,] adjacencyMatrix = new int[n,n]; // macierz sąsiedztwa
-            int[,] edgeTable = new int[saturate,2]; // tabela krawędzi
+            for (int x = 1;x <= 10; x++)
+            {
+               
+                int n = x*1000 ; // długość boku -> liczba wierzchołków
+                int saturate = (n * (n + 1) / 2) / 2; // nasycenie -> ilość połączeń
+                int[,] adjacencyMatrix = new int[n, n]; // macierz sąsiedztwa
+                int[,] edgeTable = new int[saturate, 2]; // tabela krawędzi
+                Console.WriteLine("\t\tn=" + n + "\t\t\n");
+                // Proces tworzenia tablicy z Listami
+                List<int>[] commingList = new List<int>[n]; // Lista następników
+                for (int i = 0; i < n; i++) commingList[i] = new List<int>(); // inicjowanie obiektu
 
-            // Proces tworzenia tablicy z Listami
-            List<int>[] commingList = new List<int>[n]; // Lista następników
-            for (int i=0; i<n; i++) commingList[i] = new List<int>(); // inicjowanie obiektu
+                int[,] grafMatrix = new int[n, n + 3]; // Macierz grafu
 
-            int[,] grafMatrix = new int[n, n + 3]; // Macierz grafu
+                GenerateAdjecencyMatrix(ref adjacencyMatrix, saturate, n);
+                TransformToEdgeTable(ref adjacencyMatrix, ref edgeTable, n);
+                TransformToCommingList(ref adjacencyMatrix, ref commingList, n);
+                TransformToGrafMatrix(ref adjacencyMatrix, ref grafMatrix, n);
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                AdjecencyBFSSort(ref adjacencyMatrix, n);
+                sw.Stop();
+                Console.WriteLine("BFS\tMacierz Sasiedztwa\t" + sw.ElapsedMilliseconds + "\n");
+                sw.Restart();
+                ComminfBFSSort(ref commingList, n);
+                sw.Stop();
+                Console.WriteLine("BFS\tLista Nastepnikow\t" + sw.ElapsedMilliseconds + "\n");
+                sw.Restart();
+                EdgeBFSSort(ref edgeTable, n, saturate);
+                sw.Stop();
+                Console.WriteLine("BFS\tTabela Krawedzi\t" + sw.ElapsedMilliseconds + "\n");
+                sw.Restart();
+                GrafMatrixBFSSort(ref grafMatrix, n);
+                sw.Stop();
+                Console.WriteLine("BFS\tMacierz Grafu\t" + sw.ElapsedMilliseconds + "\n");
 
-            GenerateAdjecencyMatrix(ref adjacencyMatrix, saturate, n);
-            TransformToEdgeTable(ref adjacencyMatrix, ref edgeTable, n);
-            TransformToCommingList(ref adjacencyMatrix, ref commingList, n);
-            TransformToGrafMatrix(ref adjacencyMatrix, ref grafMatrix, n);
-
-            AdjecencyBFSSort(ref adjacencyMatrix, n);
-            ComminfBFSSort(ref commingList, n);
-            EdgeBFSSort(ref edgeTable, n, saturate);
-            GrafMatrixBFSSort(ref grafMatrix, n);
-      
-            DFS(n, ref adjacencyMatrix, ref commingList,ref edgeTable, ref grafMatrix);
+                DFS(n, ref adjacencyMatrix, ref commingList, ref edgeTable, ref grafMatrix);
 
 
 
-
+            }
             Console.Read();
 
         }
