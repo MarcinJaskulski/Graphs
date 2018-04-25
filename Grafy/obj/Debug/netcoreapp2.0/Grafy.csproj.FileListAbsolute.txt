@@ -9,3 +9,14 @@ D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.AssemblyInfoIn
 D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.AssemblyInfo.cs
 D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.dll
 D:\Users\Tiarek\Desktop\Grafy\Grafy\obj\Debug\netcoreapp2.0\Grafy.pdb
+C:\Users\Kamil\source\repos\Graphs\Grafy\bin\Debug\netcoreapp2.0\Grafy.deps.json
+C:\Users\Kamil\source\repos\Graphs\Grafy\bin\Debug\netcoreapp2.0\Grafy.runtimeconfig.json
+C:\Users\Kamil\source\repos\Graphs\Grafy\bin\Debug\netcoreapp2.0\Grafy.runtimeconfig.dev.json
+C:\Users\Kamil\source\repos\Graphs\Grafy\bin\Debug\netcoreapp2.0\Grafy.dll
+C:\Users\Kamil\source\repos\Graphs\Grafy\bin\Debug\netcoreapp2.0\Grafy.pdb
+C:\Users\Kamil\source\repos\Graphs\Grafy\obj\Debug\netcoreapp2.0\Grafy.csprojResolveAssemblyReference.cache
+C:\Users\Kamil\source\repos\Graphs\Grafy\obj\Debug\netcoreapp2.0\Grafy.csproj.CoreCompileInputs.cache
+C:\Users\Kamil\source\repos\Graphs\Grafy\obj\Debug\netcoreapp2.0\Grafy.AssemblyInfoInputs.cache
+C:\Users\Kamil\source\repos\Graphs\Grafy\obj\Debug\netcoreapp2.0\Grafy.AssemblyInfo.cs
+C:\Users\Kamil\source\repos\Graphs\Grafy\obj\Debug\netcoreapp2.0\Grafy.dll
+C:\Users\Kamil\source\repos\Graphs\Grafy\obj\Debug\netcoreapp2.0\Grafy.pdb
