@@ -321,7 +321,7 @@ namespace Grafy
 
         }
 
-        static void ComminfBFSSort(ref List<int>[] commingList, int n) // sortowanie BFS z listy następników
+        static void CommingBFSSort(ref List<int>[] commingList, int n) // sortowanie BFS z listy następników
         {
             int[] amountPredecessor = new int[n]; // tabela ze zliczonymi następnikami dla danego n, czyli węzła
             int[] sorted = new int[n];
@@ -480,14 +480,14 @@ namespace Grafy
             int VCounter = 0, Scounter=n-1; //licznik pierwszego wolnego elementu tablicy visited i sorted
             Stopwatch sw = new Stopwatch();
             //algorytm dla macierzy sąsiedztwa
-            //sw.Start();
-            //for (int i = 0; i < n; i++) //dla każdego wiezrchołka
-            //{
-            // if(!visited.Contains(i))  AdjecencyDFSSort(ref adjacencyMatrix, ref sorted, ref visited, i,ref Scounter, ref VCounter,n); //jeśli w visited nie ma wierzchołka, wywołujemy
-            //}
-            //sw.Stop();
-            //Console.WriteLine("DFS\tMacierz Sasiedztwa\t" + sw.ElapsedMilliseconds + "\n");
-       
+            sw.Start();
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+                if (!visited.Contains(i)) AdjecencyDFSSort(ref adjacencyMatrix, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+            sw.Stop();
+            Console.WriteLine("DFS\tMacierz Sasiedztwa\t" + sw.ElapsedMilliseconds + "\n");
+
             //////wyświetlanie
             ////Console.Write("\n");
             ////for (int i = 0; i < n; i++)
@@ -496,18 +496,18 @@ namespace Grafy
             ////    Console.Write(sorted[i] + " ");
             ////}
 
-            //// Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
-            //sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
+            // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
+            sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
 
-            //VCounter = 0; Scounter = n - 1;
-            ////algorytm dla Listy następników
-            //sw.Restart();
-            //for (int i = 0; i < n; i++) //dla każdego wiezrchołka
-            //{
-            //    if (!visited.Contains(i)) ComminfDFSSort(ref commingList, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
-            //}
-            //sw.Stop();
-            //Console.WriteLine("DFS\tLista Nastepnikow\t" + sw.ElapsedMilliseconds + "\n");
+            VCounter = 0; Scounter = n - 1;
+            //algorytm dla Listy następników
+            sw.Restart();
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+                if (!visited.Contains(i)) ComminfDFSSort(ref commingList, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+            sw.Stop();
+            Console.WriteLine("DFS\tLista Nastepnikow\t" + sw.ElapsedMilliseconds + "\n");
 
 
             ////wyświetlanie
@@ -537,17 +537,17 @@ namespace Grafy
             //    Console.Write(sorted[i] + " ");
             //}
             // Resetujemy zmienne i robimy dokładnie to samo- powtorzyc razy tyle ile konieczne
-            //sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
+            sorted = null; visited = null; sorted = new int[n]; visited = new int[n];
 
-            //VCounter = 0; Scounter = n - 1;
-            ////algorytm dla macierzy grafu
-            //sw.Restart();
-            //for (int i = 0; i < n; i++) //dla każdego wiezrchołka
-            //{
-            //    if (!visited.Contains(i)) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
-            //}
-            //sw.Stop();
-            //Console.WriteLine("DFS\tMacierz Grafu\t" + sw.ElapsedMilliseconds + "\n");
+            VCounter = 0; Scounter = n - 1;
+            //algorytm dla macierzy grafu
+            sw.Restart();
+            for (int i = 0; i < n; i++) //dla każdego wiezrchołka
+            {
+                if (!visited.Contains(i)) GrafMatrixDFSSort(ref grafMatrix, ref sorted, ref visited, i, ref Scounter, ref VCounter, n); //jeśli w visited nie ma wierzchołka, wywołujemy
+            }
+            sw.Stop();
+            Console.WriteLine("DFS\tMacierz Grafu\t" + sw.ElapsedMilliseconds + "\n");
             ////wyświetlanie
             //Console.Write("\n");
             //for (int i = 0; i < n; i++)
@@ -648,23 +648,23 @@ namespace Grafy
                 TransformToEdgeTable(ref adjacencyMatrix, ref edgeTable, n);
                 TransformToCommingList(ref adjacencyMatrix, ref commingList, n);
                 TransformToGrafMatrix(ref adjacencyMatrix, ref grafMatrix, n);
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-                //AdjecencyBFSSort(ref adjacencyMatrix, n);
-                //sw.Stop();
-                //Console.WriteLine("BFS\tMacierz Sasiedztwa\t" + sw.ElapsedMilliseconds + "\n");
-                //sw.Restart();
-                //ComminfBFSSort(ref commingList, n);
-                //sw.Stop();
-                //Console.WriteLine("BFS\tLista Nastepnikow\t" + sw.ElapsedMilliseconds + "\n");
-                //sw.Restart();
-                //EdgeBFSSort(ref edgeTable, n, saturate);
-                //sw.Stop();
-                //Console.WriteLine("BFS\tTabela Krawedzi\t" + sw.ElapsedMilliseconds + "\n");
-                //sw.Restart();
-                //GrafMatrixBFSSort(ref grafMatrix, n);
-                //sw.Stop();
-                //Console.WriteLine("BFS\tMacierz Grafu\t" + sw.ElapsedMilliseconds + "\n");
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                AdjecencyBFSSort(ref adjacencyMatrix, n);
+                sw.Stop();
+                Console.WriteLine("BFS\tMacierz Sasiedztwa\t" + sw.ElapsedMilliseconds + "\n");
+                sw.Restart();
+                CommingBFSSort(ref commingList, n);
+                sw.Stop();
+                Console.WriteLine("BFS\tLista Nastepnikow\t" + sw.ElapsedMilliseconds + "\n");
+                sw.Restart();
+                EdgeBFSSort(ref edgeTable, n, saturate);
+                sw.Stop();
+                Console.WriteLine("BFS\tTabela Krawedzi\t" + sw.ElapsedMilliseconds + "\n");
+                sw.Restart();
+                GrafMatrixBFSSort(ref grafMatrix, n);
+                sw.Stop();
+                Console.WriteLine("BFS\tMacierz Grafu\t" + sw.ElapsedMilliseconds + "\n");
 
                 DFS(n, ref adjacencyMatrix, ref commingList, ref edgeTable, ref grafMatrix, saturate);
 
